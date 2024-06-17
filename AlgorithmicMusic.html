@@ -1,0 +1,1099 @@
+<!DOCTYPE HTML>
+
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Algorithmic music</title>
+	  <style>
+	  body {
+	    background-color: black;
+	  }
+	  
+	  .titre {
+	    font-weight: bold;
+	    font-size: xxx-large;
+	    color: white;
+		text-align: center;
+	  }
+	  
+	  .sous-titre {
+	    font-size: x-large;
+		color: white;
+		text-align: center;
+	  }
+	  
+	  .contact {
+	    font-size: medium;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+	  }
+	  
+	  figcaption {
+	    font-size: medium;
+		color: white;
+	  }
+	  
+	  * {
+         box-sizing: border-box;
+      }
+
+      .row {
+         display: flex;
+      }
+
+      .column {
+         flex: 25%;
+         padding: 5px;
+      }
+	  
+	  a {
+	     color: white;
+	     text-decoration: none;
+	  }
+	  
+	  </style>	
+   </head>
+
+   <body>
+      <script>
+	  	  // fonction wait(milliseconds) pour gérer le temps dans javascript en milliseconds (ms)// 
+	      // à utiliser avec des fonctions async pour permettre le reste du code de tourner (notamment les inputs utilisateur) // 	
+		  
+		  function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
+		  
+		  
+		  
+		  //////////////////////////////////////////////////////// Shining Automatic Chords ////////////////////////////////////////////////////////
+			
+		  var start_shining_automatic_chords = false
+		  var tbNotes = [40, 40, 40, 40, 42, 43, 43, 43, 45, 47, 47, 47, 47, 48, 50, 52, 52, 52, 52, 54, 55, 55, 55, 57, 59, 59, 59, 59, 60, 62, 64, 64, 64, 64, 66, 67, 67, 69, 71, 71, 71]; 
+		  
+		  
+          async function shining_automatic_chords()
+		  {
+		  
+		  // stop des autres programmes //
+		  start_piano_impro = false
+		  start_windchime_celesta = false
+		  start_deep_pads = false
+		  
+		  // toggle start/stop //
+					 
+		  if (start_shining_automatic_chords == false) 
+			  {
+				  start_shining_automatic_chords = true;
+				  console.log(start_shining_automatic_chords);
+			  }
+		  else
+			  {
+				  start_shining_automatic_chords = false;
+				  console.log(start_shining_automatic_chords);			
+			  }
+		  if (start_shining_automatic_chords == true)
+			  {  
+				  // définitions ou réinitialisations //
+				  var motif = [0, 0, 0, 0, 0, 0, 0];
+				  var motif2 = [0, 0, 0, 0, 0, 0, 0];
+				  var nouveauMotif = [0, 0, 0, 0, 0, 0, 0];
+				  var nouveauMotif2 = [0, 0, 0, 0, 0, 0, 0];
+				  var note;
+				  var note2;
+				  var noteJouee;
+				  var noteJouee2;
+				  var i, i1, i2, i3, i4, i5, i6;
+				  
+				  // transposition aléatoire //
+				  
+				  let transposition = 0;
+				  transposition = Math.floor(((-12) + Math.random() * (12 - (-12)))); // tonalité entre une octave au dessus et au dessous //
+				  console.log(transposition);
+				  
+				  // création d'un premier motif //
+				  
+				  for (i=0; i<motif.length; i++)
+				  {
+					  let indice = Math.floor((Math.random() * tbNotes.length));
+					  motif[i] = tbNotes[indice] + transposition;
+					  let indice2 = Math.floor((Math.random() * tbNotes.length));
+					  motif2[i] = tbNotes[indice2] + transposition;
+				  } 
+				 
+                  // boucle de lecture du motif (16 fois) //
+
+                  while (start_shining_automatic_chords == true)
+				  {
+				      i1 = 0; // réinitialisation des compteurs //
+					  i2 = 0;
+					  i3 = 0;
+					  i4 = 0;
+					  i5 = 0;
+					  i6 = 0;
+					  
+					  for (i1=0; i1<16; i1++)
+					  {
+							for (i2=0; i2<7; i2++)
+							{
+							    if (start_shining_automatic_chords == false) // stopper les boucles quand l'utilisateur a cliqué sur stop //
+								{
+								   i1 = 33;
+								   i2 = 8;
+								}
+								note = motif[i2];
+								note2 = motif2[i2];
+							    noteJouee = document.getElementById("instruments/marimba_short/" + note + ".ogg");
+								noteJouee2 = document.getElementById("instruments/marimba_short/" + note2 + ".ogg");
+								noteJouee.play();
+								noteJouee2.play();
+								await wait(170);
+							}		
+					  }
+					  
+					  // création d'un nouveau motif //
+
+					  for (i3=0; i3<7; i3++)
+					  {
+						  let indice = Math.floor((Math.random() * tbNotes.length));
+						  nouveauMotif[i3] = tbNotes[indice] + transposition;
+						  let indice2 = Math.floor((Math.random() * tbNotes.length));
+						  nouveauMotif2[i3] = tbNotes[indice2] + transposition;
+						  
+					  } 
+					  
+					  // boucle de remplacement de motif (8 répétitions à chaque changement de note) //
+					  
+					  for (i4=0; i4<7; i4++)
+                      {					  
+					       motif[i4] = nouveauMotif[i4];
+						   motif2[i4] = nouveauMotif2[i4];
+						   
+						   
+						   for (i5=0; i5<8; i5++)
+						   {     
+								for (i6=0; i6<7; i6++)
+								{	 
+									 if (start_shining_automatic_chords == false) // stopper les boucles quand l'utilisateur a cliqué sur stop //
+									 {
+										i4 = 8;
+										i5 = 9;
+										i6 = 8;
+									 }
+									 note = motif[i6];
+									 note2 = motif2[i6];
+									 noteJouee = document.getElementById("instruments/marimba_short/" + note + ".ogg");
+									 noteJouee2 = document.getElementById("instruments/marimba_short/" + note2 + ".ogg");
+									 noteJouee.play();
+									 noteJouee2.play();
+								  	 await wait(170);
+								}
+                           }
+                      }
+					  
+						  		
+				  }
+					  
+			   }
+		  }
+      
+	  
+	  //////////////////////////////////////////////////////// Piano Impro ////////////////////////////////////////////////////////
+	  
+	  var start_piano_impro = false
+	  
+	  async function piano_impro()
+	  {
+	    
+		// stop des autres programmes //
+		start_shining_automatic_chords = false
+		start_windchime_celesta = false
+		start_deep_pads = false
+
+		quatreDerniersIndices = [0, 0, 0, 0] // réinitialisation de la moyenne des indices //
+		compteurIndices = 0
+	  
+	    // alternance Start/Stop //
+	  
+		if (start_piano_impro == false)
+		{
+			start_piano_impro = true;
+			console.log(start_piano_impro);
+		}
+		else
+		{
+			start_piano_impro = false;
+			console.log(start_piano_impro);
+		}
+	  
+		if (start_piano_impro == true)
+		{
+		  
+		  var mode, fondamentale, compteurIndices;
+		  mode = Math.floor((1 + Math.random() * (7 - 1)));
+		  fondamentale = Math.floor((1 + Math.random() * (12 - 1)));;
+		  
+		  console.log(mode);
+		  console.log(fondamentale);
+		  
+		  // mise à jour de l'échelle en fonction des choix //
+		  
+		  switch (mode)
+		   {
+			 case 1:
+				var echelle = [0, 0, 0, 0, 2, 3, 3, 3, 5, 7, 7, 7, 7, 8, 10] // Mode de la // Les notes répétées sont les notes pôles (accord parfait), pour augmenter les chances de tomber dessus //
+				console.log(echelle)
+				break;
+				
+			 case 2:
+				var echelle = [0, 0, 0, 0, 1, 3, 3, 3, 5, 6, 6, 6, 6, 8, 10] // Mode de si //
+				console.log(echelle)
+				break;
+				
+			 case 3:
+				var echelle = [0, 0, 0, 0, 2, 4, 4, 4, 5, 7, 7, 7, 7, 9, 11] // Mode de do //
+				console.log(echelle)
+				break;
+				
+			 case 4:
+				var echelle = [0, 0, 0, 0, 2, 3, 3, 3, 5, 7, 7, 7, 7, 9, 11] // Mode de ré //
+				console.log(echelle)
+				break;
+			 
+			 case 5:
+				var echelle = [0, 0, 0, 0, 1, 3, 3, 3, 5, 7, 7, 7, 7, 8, 10] // Mode de mi //
+				console.log(echelle)
+				break;
+				
+			 case 6:
+				var echelle = [0, 0, 0, 0, 2, 4, 4, 4, 6, 7, 7, 7, 7, 9, 11]  // Mode de fa //
+				console.log(echelle)
+				break;
+				
+			 case 7:
+				var echelle = [0, 0, 0, 0, 2, 4, 4, 4, 5, 7, 7, 7, 7, 9, 10]  // Mode de sol //
+				console.log(echelle)
+				break;
+		    }
+		   
+		   // prise en compte de la fondamentale // 
+		  
+		   var echelleEtendue = [];
+		   
+		   for (i=0; i<echelle.length; i++)
+		   {
+		      echelleEtendue.push(echelle[i]); // insertion de l'échelle d'origine //
+		   }
+		   
+		   for (i=0; i<echelle.length; i++)
+		   {
+		      echelle[i] = echelle[i] + fondamentale; // prise en compte de la fondamentale //
+		   }
+		   
+		   console.log(echelle)
+		   
+		   // extention de l'échelle sur l'étendue du clavier //
+		   
+		   for (i=0; i<echelle.length; i++)
+		   {
+		      echelleEtendue.push(echelle[i]+12); // chaque octave supplémentaire = +12 //
+			  echelleEtendue.push(echelle[i]+24); // les octaves sont répétées en fonction de leur probabilité //
+			  echelleEtendue.push(echelle[i]+24);
+			  echelleEtendue.push(echelle[i]+24);
+			  echelleEtendue.push(echelle[i]+36);
+			  echelleEtendue.push(echelle[i]+36);
+			  echelleEtendue.push(echelle[i]+36);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+60);
+			  echelleEtendue.push(echelle[i]+60);
+			  echelleEtendue.push(echelle[i]+60); 
+
+		   }
+		   
+		   echelleEtendue.sort(function(a, b){return a - b}); // classement dans l'ordre des valeurs du tableau //
+		   
+		   console.log(echelleEtendue);
+		   
+		   // jeu aléatoire avec les notes obtenues //
+		   
+		   while (start_piano_impro == true)
+           {  
+		      let rand = Math.random()
+			  var note;
+			  		  
+			  if (rand < 0.2) // 1 chance sur 5 de jouer une note aléatoire dans tout le tableau //
+			  {
+				  var indice = Math.floor((Math.random() * echelleEtendue.length)); // indice aléatoire dans le tableau // Math.floor arrondit le résultat //
+				  note = echelleEtendue[indice]; // note jouée = note correspondante à l'indice //
+				    
+		      }
+              
+			  else // 4 chances sur 5 de jouer la note correspondant à la moyenne des 4 derniers indices du tableau //
+              { 
+               	  var moyenne = quatreDerniersIndices[0] + quatreDerniersIndices[1] + quatreDerniersIndices[2] + quatreDerniersIndices[3]
+                  moyenne = Math.round(moyenne / 4) // math.round arrondit le résultat (en cas de virgule) //
+				  note = echelleEtendue[moyenne] // note jouée = note correspondante à l'indice moyen //
+				  
+			  }
+
+              quatreDerniersIndices[compteurIndices] = indice // sauvegarde de l'indice dans la liste quatreDerniersIndices //
+		      compteurIndices = compteurIndices + 1
+		      if (compteurIndices == 4)
+		      {
+                  compteurIndices = 0 // réinitialisation du compteur après 3 (le tableau va de 0 à 3)
+              }					 
+				  
+			  // Jouer la note //	  
+		      
+			  var notejouee = document.getElementById("instruments/piano_long/" + note + ".ogg");
+
+              async function playNote() {
+                 if (notejouee == ".ogg")
+				 {
+				 console.log("null")
+                 }					
+				 else
+                 {				 
+				    if (notejouee == null)
+					{   
+					   console.log("null")
+					}
+					else
+					{
+					console.log(notejouee)
+					notejouee.play();
+					}
+                 }
+			     }
+			  
+			  playNote();
+			  var duree = Math.round((Math.random() * 200) + 100); // durée aléatoire entre 100 et 200 ms avant de jouer une nouvelle note (NB : Math.round arrondit)//
+			  await wait(duree);			  
+		   }
+		}
+	    }
+
+        //////////////////////////////////////////////////////// Windchime Celesta ////////////////////////////////////////////////////////
+		
+		var start_windchime_celesta = false;
+		
+		async function windchime_celesta()
+		{
+			// stop des autres programmes //
+			
+			start_shining_automatic_chords = false;
+			start_piano_impro = false;
+			start_deep_pads = false
+			
+			var windchime_notes = [60, 62, 63, 65, 67, 69, 70, 72] // Mode de ré sur do //
+
+			// alternance Start/Stop //
+	  
+			if (start_windchime_celesta == false)
+			{
+				start_windchime_celesta = true;
+				console.log(start_windchime_celesta);
+			}
+			else
+			{
+				start_windchime_celesta = false;
+				console.log(start_windchime_celesta);
+			}
+	  
+			while (start_windchime_celesta == true)
+			{
+				var indice = Math.floor((Math.random() * 8)); // indice aléatoire //
+				var note = windchime_notes[indice]; // note jouée = note correspondante à l'indice dans le tableau des notes //
+				var noteJouee = document.getElementById("instruments/celesta_long/" + note + ".ogg");
+				noteJouee.play();
+				var duree = Math.round((Math.random() * 100) + 50); // durée aléatoire entre 200 et 2000 ms avant de jouer une nouvelle note (NB : Math.round arrondit)//
+			    await wait(duree);	
+			}
+		}
+		
+		
+		  //////////////////////////////////////////////////////// Deep Pads ////////////////////////////////////////////////////////
+	  
+	  var start_deep_pads = false
+	  
+	  async function deep_pads()
+	  {
+	    
+		// stop des autres programmes //
+		start_shining_automatic_chords = false
+		start_windchime_celesta = false
+		start_piano_impro = false
+
+		quatreDerniersIndices = [0, 0, 0, 0] // réinitialisation de la moyenne des indices //
+		compteurIndices = 0
+	  
+	    // alternance Start/Stop //
+	  
+		if (start_deep_pads == false)
+		{
+			start_deep_pads = true;
+			console.log(start_deep_pads);
+		}
+		else
+		{
+			start_deep_pads = false;
+			console.log(start_deep_pads);
+		}
+	  
+		if (start_deep_pads == true)
+		{
+		  
+		  var mode, fondamentale, compteurIndices;
+		  mode = Math.floor((1 + Math.random() * (7 - 1)));
+		  fondamentale = Math.floor((1 + Math.random() * (12 - 1)));;
+		  
+		  console.log(mode);
+		  console.log(fondamentale);
+		  
+		  // mise à jour de l'échelle en fonction des choix //
+		  
+		  switch (mode)
+		   {
+			 case 1:
+				var echelle = [0, 0, 0, 0, 2, 3, 3, 3, 5, 7, 7, 7, 7, 8, 10] // Mode de la // Les notes répétées sont les notes pôles (accord parfait), pour augmenter les chances de tomber dessus //
+				console.log(echelle)
+				break;
+				
+			 case 2:
+				var echelle = [0, 0, 0, 0, 1, 3, 3, 3, 5, 6, 6, 6, 6, 8, 10] // Mode de si //
+				console.log(echelle)
+				break;
+				
+			 case 3:
+				var echelle = [0, 0, 0, 0, 2, 4, 4, 4, 5, 7, 7, 7, 7, 9, 11] // Mode de do //
+				console.log(echelle)
+				break;
+				
+			 case 4:
+				var echelle = [0, 0, 0, 0, 2, 3, 3, 3, 5, 7, 7, 7, 7, 9, 11] // Mode de ré //
+				console.log(echelle)
+				break;
+			 
+			 case 5:
+				var echelle = [0, 0, 0, 0, 1, 3, 3, 3, 5, 7, 7, 7, 7, 8, 10] // Mode de mi //
+				console.log(echelle)
+				break;
+				
+			 case 6:
+				var echelle = [0, 0, 0, 0, 2, 4, 4, 4, 6, 7, 7, 7, 7, 9, 11]  // Mode de fa //
+				console.log(echelle)
+				break;
+				
+			 case 7:
+				var echelle = [0, 0, 0, 0, 2, 4, 4, 4, 5, 7, 7, 7, 7, 9, 10]  // Mode de sol //
+				console.log(echelle)
+				break;
+		    }
+		   
+		   // prise en compte de la fondamentale // 
+		  
+		   var echelleEtendue = [];
+		   
+		   for (i=0; i<echelle.length; i++)
+		   {
+		      echelleEtendue.push(echelle[i]); // insertion de l'échelle d'origine //
+		   }
+		   
+		   for (i=0; i<echelle.length; i++)
+		   {
+		      echelle[i] = echelle[i] + fondamentale; // prise en compte de la fondamentale //
+		   }
+		   
+		   console.log(echelle)
+		   
+		   // extention de l'échelle sur l'étendue du clavier //
+		   
+		   for (i=0; i<echelle.length; i++)
+		   {
+		      echelleEtendue.push(echelle[i]+12); // chaque octave supplémentaire = +12 //
+			  echelleEtendue.push(echelle[i]+24); // les octaves sont répétées en fonction de leur probabilité //
+			  echelleEtendue.push(echelle[i]+24);
+			  echelleEtendue.push(echelle[i]+24);
+			  echelleEtendue.push(echelle[i]+36);
+			  echelleEtendue.push(echelle[i]+36);
+			  echelleEtendue.push(echelle[i]+36);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+48);
+			  echelleEtendue.push(echelle[i]+60);
+			  echelleEtendue.push(echelle[i]+60);
+			  echelleEtendue.push(echelle[i]+60); 
+
+		   }
+		   
+		   echelleEtendue.sort(function(a, b){return a - b}); // classement dans l'ordre des valeurs du tableau //
+		   
+		   console.log(echelleEtendue);
+		   
+		   // jeu aléatoire avec les notes obtenues //
+		   
+		   while (start_deep_pads == true)
+           {  
+		      let rand = Math.random()
+			  var note;
+			  		  
+			  if (rand < 0.2) // 1 chance sur 5 de jouer une note aléatoire dans tout le tableau //
+			  {
+				  var indice = Math.floor((Math.random() * echelleEtendue.length)); // indice aléatoire dans le tableau // Math.floor arrondit le résultat //
+				  note = echelleEtendue[indice]; // note jouée = note correspondante à l'indice //
+				    
+		      }
+              
+			  else // 4 chances sur 5 de jouer la note correspondant à la moyenne des 4 derniers indices du tableau //
+              { 
+               	  var moyenne = quatreDerniersIndices[0] + quatreDerniersIndices[1] + quatreDerniersIndices[2] + quatreDerniersIndices[3]
+                  moyenne = Math.round(moyenne / 4) // math.round arrondit le résultat (en cas de virgule) //
+				  note = echelleEtendue[moyenne] // note jouée = note correspondante à l'indice moyen //
+				  
+			  }
+
+              quatreDerniersIndices[compteurIndices] = indice // sauvegarde de l'indice dans la liste quatreDerniersIndices //
+		      compteurIndices = compteurIndices + 1
+		      if (compteurIndices == 4)
+		      {
+                  compteurIndices = 0 // réinitialisation du compteur après 3 (le tableau va de 0 à 3)
+              }					 
+				  
+			  // Jouer la note //	  
+		      
+			  var notejouee = document.getElementById("instruments/synth1_verylong/" + note + ".ogg");
+
+              async function playNote() {
+                 if (notejouee == ".ogg")
+				 {
+				 console.log("null")
+                 }					
+				 else
+                 {				 
+				    if (notejouee == null)
+					{   
+					   console.log("null")
+					}
+					else
+					{
+					console.log(notejouee)
+					notejouee.play();
+					}
+                 }
+			     }
+			  
+			  playNote();
+			  var duree = Math.round((Math.random() * 200) + 100); // durée aléatoire entre 1000 et 2000 ms avant de jouer une nouvelle note (NB : Math.round arrondit)//
+			  await wait(duree);			  
+		   }
+		}
+	    }	
+	  </script>	
+	  
+	  
+	  <p class="titre">Algorithmic Music</p>
+      <p class="sous-titre">Infinite music played live by simple algorithms</p>
+	  <br/><br/>
+	  <div class="row">
+          <div class="column">	  
+			  <figure>
+				   <img src="img/shining_automatic_chords.png"
+				   alt="White square"
+				   width="300"
+				   height="300">
+				   <figcaption><b>Shining Automatic Chords</b><br>
+								  Repetitive music inspired by Steve Reich's works</figcaption>
+				   <input type="button" id="start_shining_automatic_chords" value="Start / Stop" onclick="shining_automatic_chords()"/>
+			  </figure>
+		  </div>
+		  <div class="column">
+			  <figure>
+				   <img src="img/carillon.png"
+				   alt="White square"
+				   width="300"
+				   height="300">
+				   <figcaption><b>Piano Impro</b><br>
+								  Free "improvisation" by computer</figcaption>
+				   <input type="button" id="start_piano_impro" value="Start / Stop" onclick="piano_impro()"/>
+			  </figure>
+		  </div>
+		  <div class="column">
+			  <figure>
+				   <img src="img/carillon.png"
+				   alt="White square"
+				   width="300"
+				   height="300">
+				   <figcaption><b>Windshime Celesta</b><br>
+								  Windchime-like little notes</figcaption>
+				   <input type="button" id="start_windchime_celesta" value = "Start / Stop" onclick="windchime_celesta()"/>
+			  </figure>
+		  </div>
+		  <div class="column">
+			  <figure>
+				   <img src="img/carillon.png"
+				   alt="White square"
+				   width="300"
+				   height="300">
+				   <figcaption><b>Deep Pads</b><br>
+								  Ambient music on pseudo-analog synth</figcaption>
+				   <input type="button" id="start_deep_pads" value = "Start / Stop" onclick="deep_pads()"/>
+			  </figure>
+		  </div>
+		</div>
+		<br><br><br><br>
+		<p class="contact">Composed in 2020</p>
+		<p class="contact">Contact and comments : <a href="mailto:benjamin.bouvrot@gmail.com">benjamin.bouvrot@gmail.com</a></p>
+	  
+   	  <audio id="instruments/piano_short/9.ogg" source src="instruments/piano_short/9.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/10.ogg" source src="instruments/piano_short/10.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/11.ogg" source src="instruments/piano_short/11.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/12.ogg" source src="instruments/piano_short/12.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/13.ogg" source src="instruments/piano_short/13.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/14.ogg" source src="instruments/piano_short/14.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/15.ogg" source src="instruments/piano_short/15.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/16.ogg" source src="instruments/piano_short/16.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/17.ogg" source src="instruments/piano_short/17.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/18.ogg" source src="instruments/piano_short/18.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/19.ogg" source src="instruments/piano_short/19.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/20.ogg" source src="instruments/piano_short/20.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/21.ogg" source src="instruments/piano_short/21.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/22.ogg" source src="instruments/piano_short/22.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/23.ogg" source src="instruments/piano_short/23.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/24.ogg" source src="instruments/piano_short/24.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/25.ogg" source src="instruments/piano_short/25.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/26.ogg" source src="instruments/piano_short/26.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/27.ogg" source src="instruments/piano_short/27.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/28.ogg" source src="instruments/piano_short/28.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/29.ogg" source src="instruments/piano_short/29.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/30.ogg" source src="instruments/piano_short/30.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/31.ogg" source src="instruments/piano_short/31.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/32.ogg" source src="instruments/piano_short/32.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/33.ogg" source src="instruments/piano_short/33.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/34.ogg" source src="instruments/piano_short/34.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/35.ogg" source src="instruments/piano_short/35.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/36.ogg" source src="instruments/piano_short/36.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/37.ogg" source src="instruments/piano_short/37.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/38.ogg" source src="instruments/piano_short/38.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/39.ogg" source src="instruments/piano_short/39.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/40.ogg" source src="instruments/piano_short/40.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/41.ogg" source src="instruments/piano_short/41.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/42.ogg" source src="instruments/piano_short/42.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/piano_short/43.ogg" source src="instruments/piano_short/43.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/44.ogg" source src="instruments/piano_short/44.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/45.ogg" source src="instruments/piano_short/45.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/46.ogg" source src="instruments/piano_short/46.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/47.ogg" source src="instruments/piano_short/47.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/48.ogg" source src="instruments/piano_short/48.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/49.ogg" source src="instruments/piano_short/49.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/piano_short/50.ogg" source src="instruments/piano_short/50.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/51.ogg" source src="instruments/piano_short/51.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/52.ogg" source src="instruments/piano_short/52.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/53.ogg" source src="instruments/piano_short/53.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/54.ogg" source src="instruments/piano_short/54.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/55.ogg" source src="instruments/piano_short/55.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/56.ogg" source src="instruments/piano_short/56.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/57.ogg" source src="instruments/piano_short/57.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/58.ogg" source src="instruments/piano_short/58.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/59.ogg" source src="instruments/piano_short/59.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/60.ogg" source src="instruments/piano_short/60.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/61.ogg" source src="instruments/piano_short/61.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/62.ogg" source src="instruments/piano_short/62.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/63.ogg" source src="instruments/piano_short/63.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/64.ogg" source src="instruments/piano_short/64.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/65.ogg" source src="instruments/piano_short/65.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/66.ogg" source src="instruments/piano_short/66.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/67.ogg" source src="instruments/piano_short/67.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/68.ogg" source src="instruments/piano_short/68.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/69.ogg" source src="instruments/piano_short/69.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/70.ogg" source src="instruments/piano_short/70.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/71.ogg" source src="instruments/piano_short/71.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/72.ogg" source src="instruments/piano_short/72.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/73.ogg" source src="instruments/piano_short/73.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/74.ogg" source src="instruments/piano_short/74.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/75.ogg" source src="instruments/piano_short/75.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/76.ogg" source src="instruments/piano_short/76.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/77.ogg" source src="instruments/piano_short/77.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/78.ogg" source src="instruments/piano_short/78.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/79.ogg" source src="instruments/piano_short/79.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/80.ogg" source src="instruments/piano_short/80.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/81.ogg" source src="instruments/piano_short/81.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/82.ogg" source src="instruments/piano_short/82.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/83.ogg" source src="instruments/piano_short/83.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/84.ogg" source src="instruments/piano_short/84.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/85.ogg" source src="instruments/piano_short/85.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/86.ogg" source src="instruments/piano_short/86.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/87.ogg" source src="instruments/piano_short/87.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/88.ogg" source src="instruments/piano_short/88.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/89.ogg" source src="instruments/piano_short/89.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/90.ogg" source src="instruments/piano_short/90.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/91.ogg" source src="instruments/piano_short/91.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/92.ogg" source src="instruments/piano_short/92.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/93.ogg" source src="instruments/piano_short/93.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/94.ogg" source src="instruments/piano_short/94.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/95.ogg" source src="instruments/piano_short/95.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_short/96.ogg" source src="instruments/piano_short/96.ogg" type="audio/ogg"></audio>
+	  
+	  <audio id="instruments/piano_long/9.ogg" source src="instruments/piano_long/9.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/10.ogg" source src="instruments/piano_long/10.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/11.ogg" source src="instruments/piano_long/11.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/12.ogg" source src="instruments/piano_long/12.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/13.ogg" source src="instruments/piano_long/13.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/14.ogg" source src="instruments/piano_long/14.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/15.ogg" source src="instruments/piano_long/15.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/16.ogg" source src="instruments/piano_long/16.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/17.ogg" source src="instruments/piano_long/17.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/18.ogg" source src="instruments/piano_long/18.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/19.ogg" source src="instruments/piano_long/19.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/20.ogg" source src="instruments/piano_long/20.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/21.ogg" source src="instruments/piano_long/21.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/22.ogg" source src="instruments/piano_long/22.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/23.ogg" source src="instruments/piano_long/23.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/24.ogg" source src="instruments/piano_long/24.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/25.ogg" source src="instruments/piano_long/25.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/26.ogg" source src="instruments/piano_long/26.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/27.ogg" source src="instruments/piano_long/27.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/28.ogg" source src="instruments/piano_long/28.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/29.ogg" source src="instruments/piano_long/29.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/30.ogg" source src="instruments/piano_long/30.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/31.ogg" source src="instruments/piano_long/31.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/32.ogg" source src="instruments/piano_long/32.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/33.ogg" source src="instruments/piano_long/33.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/34.ogg" source src="instruments/piano_long/34.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/35.ogg" source src="instruments/piano_long/35.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/36.ogg" source src="instruments/piano_long/36.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/37.ogg" source src="instruments/piano_long/37.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/38.ogg" source src="instruments/piano_long/38.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/39.ogg" source src="instruments/piano_long/39.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/40.ogg" source src="instruments/piano_long/40.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/41.ogg" source src="instruments/piano_long/41.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/42.ogg" source src="instruments/piano_long/42.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/piano_long/43.ogg" source src="instruments/piano_long/43.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/44.ogg" source src="instruments/piano_long/44.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/45.ogg" source src="instruments/piano_long/45.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/46.ogg" source src="instruments/piano_long/46.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/47.ogg" source src="instruments/piano_long/47.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/48.ogg" source src="instruments/piano_long/48.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/49.ogg" source src="instruments/piano_long/49.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/piano_long/50.ogg" source src="instruments/piano_long/50.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/51.ogg" source src="instruments/piano_long/51.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/52.ogg" source src="instruments/piano_long/52.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/53.ogg" source src="instruments/piano_long/53.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/54.ogg" source src="instruments/piano_long/54.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/55.ogg" source src="instruments/piano_long/55.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/56.ogg" source src="instruments/piano_long/56.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/57.ogg" source src="instruments/piano_long/57.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/58.ogg" source src="instruments/piano_long/58.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/59.ogg" source src="instruments/piano_long/59.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/60.ogg" source src="instruments/piano_long/60.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/61.ogg" source src="instruments/piano_long/61.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/62.ogg" source src="instruments/piano_long/62.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/63.ogg" source src="instruments/piano_long/63.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/64.ogg" source src="instruments/piano_long/64.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/65.ogg" source src="instruments/piano_long/65.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/66.ogg" source src="instruments/piano_long/66.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/67.ogg" source src="instruments/piano_long/67.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/68.ogg" source src="instruments/piano_long/68.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/69.ogg" source src="instruments/piano_long/69.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/70.ogg" source src="instruments/piano_long/70.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/71.ogg" source src="instruments/piano_long/71.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/72.ogg" source src="instruments/piano_long/72.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/73.ogg" source src="instruments/piano_long/73.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/74.ogg" source src="instruments/piano_long/74.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/75.ogg" source src="instruments/piano_long/75.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/76.ogg" source src="instruments/piano_long/76.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/77.ogg" source src="instruments/piano_long/77.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/78.ogg" source src="instruments/piano_long/78.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/79.ogg" source src="instruments/piano_long/79.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/80.ogg" source src="instruments/piano_long/80.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/81.ogg" source src="instruments/piano_long/81.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/82.ogg" source src="instruments/piano_long/82.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/83.ogg" source src="instruments/piano_long/83.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/84.ogg" source src="instruments/piano_long/84.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/85.ogg" source src="instruments/piano_long/85.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/86.ogg" source src="instruments/piano_long/86.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/87.ogg" source src="instruments/piano_long/87.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/88.ogg" source src="instruments/piano_long/88.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/89.ogg" source src="instruments/piano_long/89.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/90.ogg" source src="instruments/piano_long/90.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/91.ogg" source src="instruments/piano_long/91.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/92.ogg" source src="instruments/piano_long/92.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/93.ogg" source src="instruments/piano_long/93.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/94.ogg" source src="instruments/piano_long/94.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/95.ogg" source src="instruments/piano_long/95.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/piano_long/96.ogg" source src="instruments/piano_long/96.ogg" type="audio/ogg"></audio>
+	  
+	  <audio id="instruments/celesta_long/9.ogg" source src="instruments/celesta_long/9.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/10.ogg" source src="instruments/celesta_long/10.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/11.ogg" source src="instruments/celesta_long/11.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/12.ogg" source src="instruments/celesta_long/12.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/13.ogg" source src="instruments/celesta_long/13.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/14.ogg" source src="instruments/celesta_long/14.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/15.ogg" source src="instruments/celesta_long/15.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/16.ogg" source src="instruments/celesta_long/16.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/17.ogg" source src="instruments/celesta_long/17.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/18.ogg" source src="instruments/celesta_long/18.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/19.ogg" source src="instruments/celesta_long/19.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/20.ogg" source src="instruments/celesta_long/20.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/21.ogg" source src="instruments/celesta_long/21.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/22.ogg" source src="instruments/celesta_long/22.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/23.ogg" source src="instruments/celesta_long/23.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/24.ogg" source src="instruments/celesta_long/24.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/25.ogg" source src="instruments/celesta_long/25.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/26.ogg" source src="instruments/celesta_long/26.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/27.ogg" source src="instruments/celesta_long/27.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/28.ogg" source src="instruments/celesta_long/28.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/29.ogg" source src="instruments/celesta_long/29.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/30.ogg" source src="instruments/celesta_long/30.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/31.ogg" source src="instruments/celesta_long/31.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/32.ogg" source src="instruments/celesta_long/32.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/33.ogg" source src="instruments/celesta_long/33.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/34.ogg" source src="instruments/celesta_long/34.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/35.ogg" source src="instruments/celesta_long/35.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/36.ogg" source src="instruments/celesta_long/36.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/37.ogg" source src="instruments/celesta_long/37.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/38.ogg" source src="instruments/celesta_long/38.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/39.ogg" source src="instruments/celesta_long/39.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/40.ogg" source src="instruments/celesta_long/40.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/41.ogg" source src="instruments/celesta_long/41.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/42.ogg" source src="instruments/celesta_long/42.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/celesta_long/43.ogg" source src="instruments/celesta_long/43.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/44.ogg" source src="instruments/celesta_long/44.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/45.ogg" source src="instruments/celesta_long/45.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/46.ogg" source src="instruments/celesta_long/46.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/47.ogg" source src="instruments/celesta_long/47.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/48.ogg" source src="instruments/celesta_long/48.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/49.ogg" source src="instruments/celesta_long/49.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/celesta_long/50.ogg" source src="instruments/celesta_long/50.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/51.ogg" source src="instruments/celesta_long/51.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/52.ogg" source src="instruments/celesta_long/52.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/53.ogg" source src="instruments/celesta_long/53.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/54.ogg" source src="instruments/celesta_long/54.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/55.ogg" source src="instruments/celesta_long/55.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/56.ogg" source src="instruments/celesta_long/56.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/57.ogg" source src="instruments/celesta_long/57.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/58.ogg" source src="instruments/celesta_long/58.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/59.ogg" source src="instruments/celesta_long/59.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/60.ogg" source src="instruments/celesta_long/60.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/61.ogg" source src="instruments/celesta_long/61.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/62.ogg" source src="instruments/celesta_long/62.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/63.ogg" source src="instruments/celesta_long/63.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/64.ogg" source src="instruments/celesta_long/64.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/65.ogg" source src="instruments/celesta_long/65.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/66.ogg" source src="instruments/celesta_long/66.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/67.ogg" source src="instruments/celesta_long/67.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/68.ogg" source src="instruments/celesta_long/68.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/69.ogg" source src="instruments/celesta_long/69.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/70.ogg" source src="instruments/celesta_long/70.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/71.ogg" source src="instruments/celesta_long/71.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/72.ogg" source src="instruments/celesta_long/72.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/73.ogg" source src="instruments/celesta_long/73.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/74.ogg" source src="instruments/celesta_long/74.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/75.ogg" source src="instruments/celesta_long/75.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/76.ogg" source src="instruments/celesta_long/76.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/77.ogg" source src="instruments/celesta_long/77.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/78.ogg" source src="instruments/celesta_long/78.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/79.ogg" source src="instruments/celesta_long/79.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/80.ogg" source src="instruments/celesta_long/80.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/81.ogg" source src="instruments/celesta_long/81.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/82.ogg" source src="instruments/celesta_long/82.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/83.ogg" source src="instruments/celesta_long/83.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/84.ogg" source src="instruments/celesta_long/84.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/85.ogg" source src="instruments/celesta_long/85.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/86.ogg" source src="instruments/celesta_long/86.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/87.ogg" source src="instruments/celesta_long/87.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/88.ogg" source src="instruments/celesta_long/88.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/89.ogg" source src="instruments/celesta_long/89.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/90.ogg" source src="instruments/celesta_long/90.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/91.ogg" source src="instruments/celesta_long/91.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/92.ogg" source src="instruments/celesta_long/92.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/93.ogg" source src="instruments/celesta_long/93.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/94.ogg" source src="instruments/celesta_long/94.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/95.ogg" source src="instruments/celesta_long/95.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/celesta_long/96.ogg" source src="instruments/celesta_long/96.ogg" type="audio/ogg"></audio>
+	  
+	  <audio id="instruments/marimba_short/9.ogg" source src="instruments/marimba_short/9.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/10.ogg" source src="instruments/marimba_short/10.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/11.ogg" source src="instruments/marimba_short/11.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/12.ogg" source src="instruments/marimba_short/12.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/13.ogg" source src="instruments/marimba_short/13.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/14.ogg" source src="instruments/marimba_short/14.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/15.ogg" source src="instruments/marimba_short/15.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/16.ogg" source src="instruments/marimba_short/16.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/17.ogg" source src="instruments/marimba_short/17.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/18.ogg" source src="instruments/marimba_short/18.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/19.ogg" source src="instruments/marimba_short/19.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/20.ogg" source src="instruments/marimba_short/20.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/21.ogg" source src="instruments/marimba_short/21.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/22.ogg" source src="instruments/marimba_short/22.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/23.ogg" source src="instruments/marimba_short/23.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/24.ogg" source src="instruments/marimba_short/24.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/25.ogg" source src="instruments/marimba_short/25.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/26.ogg" source src="instruments/marimba_short/26.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/27.ogg" source src="instruments/marimba_short/27.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/28.ogg" source src="instruments/marimba_short/28.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/29.ogg" source src="instruments/marimba_short/29.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/30.ogg" source src="instruments/marimba_short/30.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/31.ogg" source src="instruments/marimba_short/31.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/32.ogg" source src="instruments/marimba_short/32.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/33.ogg" source src="instruments/marimba_short/33.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/34.ogg" source src="instruments/marimba_short/34.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/35.ogg" source src="instruments/marimba_short/35.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/36.ogg" source src="instruments/marimba_short/36.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/37.ogg" source src="instruments/marimba_short/37.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/38.ogg" source src="instruments/marimba_short/38.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/39.ogg" source src="instruments/marimba_short/39.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/40.ogg" source src="instruments/marimba_short/40.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/41.ogg" source src="instruments/marimba_short/41.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/42.ogg" source src="instruments/marimba_short/42.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/marimba_short/43.ogg" source src="instruments/marimba_short/43.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/44.ogg" source src="instruments/marimba_short/44.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/45.ogg" source src="instruments/marimba_short/45.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/46.ogg" source src="instruments/marimba_short/46.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/47.ogg" source src="instruments/marimba_short/47.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/48.ogg" source src="instruments/marimba_short/48.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/49.ogg" source src="instruments/marimba_short/49.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/marimba_short/50.ogg" source src="instruments/marimba_short/50.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/51.ogg" source src="instruments/marimba_short/51.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/52.ogg" source src="instruments/marimba_short/52.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/53.ogg" source src="instruments/marimba_short/53.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/54.ogg" source src="instruments/marimba_short/54.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/55.ogg" source src="instruments/marimba_short/55.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/56.ogg" source src="instruments/marimba_short/56.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/57.ogg" source src="instruments/marimba_short/57.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/58.ogg" source src="instruments/marimba_short/58.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/59.ogg" source src="instruments/marimba_short/59.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/60.ogg" source src="instruments/marimba_short/60.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/61.ogg" source src="instruments/marimba_short/61.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/62.ogg" source src="instruments/marimba_short/62.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/63.ogg" source src="instruments/marimba_short/63.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/64.ogg" source src="instruments/marimba_short/64.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/65.ogg" source src="instruments/marimba_short/65.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/66.ogg" source src="instruments/marimba_short/66.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/67.ogg" source src="instruments/marimba_short/67.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/68.ogg" source src="instruments/marimba_short/68.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/69.ogg" source src="instruments/marimba_short/69.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/70.ogg" source src="instruments/marimba_short/70.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/71.ogg" source src="instruments/marimba_short/71.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/72.ogg" source src="instruments/marimba_short/72.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/73.ogg" source src="instruments/marimba_short/73.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/74.ogg" source src="instruments/marimba_short/74.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/75.ogg" source src="instruments/marimba_short/75.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/76.ogg" source src="instruments/marimba_short/76.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/77.ogg" source src="instruments/marimba_short/77.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/78.ogg" source src="instruments/marimba_short/78.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/79.ogg" source src="instruments/marimba_short/79.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/80.ogg" source src="instruments/marimba_short/80.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/81.ogg" source src="instruments/marimba_short/81.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/82.ogg" source src="instruments/marimba_short/82.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/83.ogg" source src="instruments/marimba_short/83.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/84.ogg" source src="instruments/marimba_short/84.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/85.ogg" source src="instruments/marimba_short/85.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/86.ogg" source src="instruments/marimba_short/86.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/87.ogg" source src="instruments/marimba_short/87.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/88.ogg" source src="instruments/marimba_short/88.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/89.ogg" source src="instruments/marimba_short/89.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/90.ogg" source src="instruments/marimba_short/90.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/91.ogg" source src="instruments/marimba_short/91.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/92.ogg" source src="instruments/marimba_short/92.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/93.ogg" source src="instruments/marimba_short/93.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/94.ogg" source src="instruments/marimba_short/94.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/95.ogg" source src="instruments/marimba_short/95.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/marimba_short/96.ogg" source src="instruments/marimba_short/96.ogg" type="audio/ogg"></audio>
+	  
+	  <audio id="instruments/synth1_verylong/9.ogg" source src="instruments/synth1_verylong/9.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/10.ogg" source src="instruments/synth1_verylong/10.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/11.ogg" source src="instruments/synth1_verylong/11.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/12.ogg" source src="instruments/synth1_verylong/12.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/13.ogg" source src="instruments/synth1_verylong/13.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/14.ogg" source src="instruments/synth1_verylong/14.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/15.ogg" source src="instruments/synth1_verylong/15.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/16.ogg" source src="instruments/synth1_verylong/16.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/17.ogg" source src="instruments/synth1_verylong/17.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/18.ogg" source src="instruments/synth1_verylong/18.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/19.ogg" source src="instruments/synth1_verylong/19.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/20.ogg" source src="instruments/synth1_verylong/20.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/21.ogg" source src="instruments/synth1_verylong/21.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/22.ogg" source src="instruments/synth1_verylong/22.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/23.ogg" source src="instruments/synth1_verylong/23.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/24.ogg" source src="instruments/synth1_verylong/24.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/25.ogg" source src="instruments/synth1_verylong/25.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/26.ogg" source src="instruments/synth1_verylong/26.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/27.ogg" source src="instruments/synth1_verylong/27.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/28.ogg" source src="instruments/synth1_verylong/28.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/29.ogg" source src="instruments/synth1_verylong/29.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/30.ogg" source src="instruments/synth1_verylong/30.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/31.ogg" source src="instruments/synth1_verylong/31.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/32.ogg" source src="instruments/synth1_verylong/32.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/33.ogg" source src="instruments/synth1_verylong/33.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/34.ogg" source src="instruments/synth1_verylong/34.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/35.ogg" source src="instruments/synth1_verylong/35.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/36.ogg" source src="instruments/synth1_verylong/36.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/37.ogg" source src="instruments/synth1_verylong/37.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/38.ogg" source src="instruments/synth1_verylong/38.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/39.ogg" source src="instruments/synth1_verylong/39.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/40.ogg" source src="instruments/synth1_verylong/40.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/41.ogg" source src="instruments/synth1_verylong/41.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/42.ogg" source src="instruments/synth1_verylong/42.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/synth1_verylong/43.ogg" source src="instruments/synth1_verylong/43.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/44.ogg" source src="instruments/synth1_verylong/44.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/45.ogg" source src="instruments/synth1_verylong/45.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/46.ogg" source src="instruments/synth1_verylong/46.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/47.ogg" source src="instruments/synth1_verylong/47.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/48.ogg" source src="instruments/synth1_verylong/48.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/49.ogg" source src="instruments/synth1_verylong/49.ogg" type="audio/ogg"></audio>
+      <audio id="instruments/synth1_verylong/50.ogg" source src="instruments/synth1_verylong/50.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/51.ogg" source src="instruments/synth1_verylong/51.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/52.ogg" source src="instruments/synth1_verylong/52.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/53.ogg" source src="instruments/synth1_verylong/53.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/54.ogg" source src="instruments/synth1_verylong/54.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/55.ogg" source src="instruments/synth1_verylong/55.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/56.ogg" source src="instruments/synth1_verylong/56.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/57.ogg" source src="instruments/synth1_verylong/57.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/58.ogg" source src="instruments/synth1_verylong/58.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/59.ogg" source src="instruments/synth1_verylong/59.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/60.ogg" source src="instruments/synth1_verylong/60.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/61.ogg" source src="instruments/synth1_verylong/61.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/62.ogg" source src="instruments/synth1_verylong/62.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/63.ogg" source src="instruments/synth1_verylong/63.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/64.ogg" source src="instruments/synth1_verylong/64.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/65.ogg" source src="instruments/synth1_verylong/65.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/66.ogg" source src="instruments/synth1_verylong/66.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/67.ogg" source src="instruments/synth1_verylong/67.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/68.ogg" source src="instruments/synth1_verylong/68.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/69.ogg" source src="instruments/synth1_verylong/69.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/70.ogg" source src="instruments/synth1_verylong/70.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/71.ogg" source src="instruments/synth1_verylong/71.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/72.ogg" source src="instruments/synth1_verylong/72.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/73.ogg" source src="instruments/synth1_verylong/73.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/74.ogg" source src="instruments/synth1_verylong/74.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/75.ogg" source src="instruments/synth1_verylong/75.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/76.ogg" source src="instruments/synth1_verylong/76.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/77.ogg" source src="instruments/synth1_verylong/77.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/78.ogg" source src="instruments/synth1_verylong/78.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/79.ogg" source src="instruments/synth1_verylong/79.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/80.ogg" source src="instruments/synth1_verylong/80.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/81.ogg" source src="instruments/synth1_verylong/81.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/82.ogg" source src="instruments/synth1_verylong/82.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/83.ogg" source src="instruments/synth1_verylong/83.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/84.ogg" source src="instruments/synth1_verylong/84.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/85.ogg" source src="instruments/synth1_verylong/85.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/86.ogg" source src="instruments/synth1_verylong/86.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/87.ogg" source src="instruments/synth1_verylong/87.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/88.ogg" source src="instruments/synth1_verylong/88.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/89.ogg" source src="instruments/synth1_verylong/89.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/90.ogg" source src="instruments/synth1_verylong/90.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/91.ogg" source src="instruments/synth1_verylong/91.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/92.ogg" source src="instruments/synth1_verylong/92.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/93.ogg" source src="instruments/synth1_verylong/93.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/94.ogg" source src="instruments/synth1_verylong/94.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/95.ogg" source src="instruments/synth1_verylong/95.ogg" type="audio/ogg"></audio>
+	  <audio id="instruments/synth1_verylong/96.ogg" source src="instruments/synth1_verylong/96.ogg" type="audio/ogg"></audio>
+   </body>
+   
+</html>
